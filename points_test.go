@@ -43,6 +43,72 @@ func TestCalculatePoints(t *testing.T) {
 			},
 			expected: 109,
 		},
+		{
+			name: "Round Dollar Amount",
+			receipt: Receipt{
+				Retailer:     "Walmart",
+				PurchaseDate: "2023-05-15",
+				PurchaseTime: "11:00",
+				Items: []Item{
+					{ShortDescription: "Bread", Price: "2.00"},
+				},
+				Total: "2.00",
+			},
+			expected: 88,
+		},
+		{
+			name: "Multiple of 0.25",
+			receipt: Receipt{
+				Retailer:     "Costco",
+				PurchaseDate: "2023-05-15",
+				PurchaseTime: "11:00",
+				Items: []Item{
+					{ShortDescription: "Milk", Price: "1.25"},
+				},
+				Total: "1.25",
+			},
+			expected: 37,
+		},
+		{
+			name: "Multiple of 0.25 with hour",
+			receipt: Receipt{
+				Retailer:     "Costco",
+				PurchaseDate: "2023-05-15",
+				PurchaseTime: "15:22",
+				Items: []Item{
+					{ShortDescription: "Milk", Price: "1.25"},
+				},
+				Total: "1.25",
+			},
+			expected: 47,
+		},
+		{
+			name: "Morning receipt",
+			receipt: Receipt{
+				Retailer:     "Walgreens",
+				PurchaseDate: "2022-01-02",
+				PurchaseTime: "08:13",
+				Items: []Item{
+					{ShortDescription: "Pepsi - 12-oz", Price: "1.25"},
+					{ShortDescription: "Dasani", Price: "1.40"},
+				},
+				Total: "2.65",
+			},
+			expected: 15,
+		},
+		{
+			name: "Simple receipt",
+			receipt: Receipt{
+				Retailer:     "Target",
+				PurchaseDate: "2022-01-02",
+				PurchaseTime: "13:13",
+				Items: []Item{
+					{ShortDescription: "Pepsi - 12-oz", Price: "1.25"},
+				},
+				Total: "1.25",
+			},
+			expected: 31,
+		},
 	}
 
 	for _, tt := range tests {
